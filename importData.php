@@ -1,5 +1,4 @@
 <?php
-//treba vremena da se sve izvrsi - postavi max vreme na 100 sekundi umesto na 30 koji je default
 set_time_limit(100);
 
     include_once 'baza.php';
