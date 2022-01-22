@@ -195,3 +195,7 @@ print_r ($dobavljaci);
 echo '</pre>';
 die;
 
+// echo '<pre style="background:white;">';
+// print_r ($proizvodi);
+// echo '</pre>';
+// die;
