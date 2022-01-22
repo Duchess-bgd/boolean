@@ -156,22 +156,22 @@
 
         function updateProducts($id)
         {
-            $pro = $this->izvrsi_select("UPDATE `product` SET `id`=$id,
-                                                `part_desc`='[value-2]',
-                                                `part_number`='[value-3]',
-                                                `days_valid`='[value-4]',
-                                                `quantity`='[value-5]',
-                                                `price`='[value-6]',
-                                                `category_id`='[value-7]',
-                                                `priority`='[value-8]',
-                                                `state_id`='[value-9]',
-                                                `supplier_id`='[value-10]' 
+            $newPro = $this->izvrsi_select("UPDATE `product` SET `id`=$id,
+                                                `part_desc`= $part_desc,
+                                                `part_number`=$part_number,
+                                                `days_valid`=$days_valid,
+                                                `quantity`=$quantity,
+                                                `price`=$price,
+                                                `category_id`=$category_id,
+                                                `priority`=$priority,
+                                                `state_id`=$state_id,
+                                                `supplier_id`=$supplier_id 
                                                 
                                                 WHERE `id`=$id ");
-            if($pro['uspesno'] == true){
-                echo json_encode($pro['niz']);
+            if($newPro['uspesno'] == true){
+                echo json_encode($newPro['niz']);
             }else{
-                die("Neuspesan upit: ".$pro['poruka']);
+                die("Neuspesan upit: ".$newPro['poruka']);
             }
         }
 
