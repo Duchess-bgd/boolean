@@ -154,7 +154,7 @@
             }
         }
 
-        function updateProducts($id)
+        function updateProducts($id,$part_desc,$part_number,$days_valid,$quantity,$price, $category_id, $priority, $state_id, $supplier_id)
         {
             $newPro = $this->izvrsi_select("UPDATE `product` SET `id`=$id,
                                                 `part_desc`= $part_desc,
