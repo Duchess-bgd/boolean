@@ -41,7 +41,7 @@
 
         }
 
-// primer: 
+
         function getAllData(){
             $r = $this->izvrsi_select("SELECT product.id, 
                                                     product.part_desc, 
@@ -63,7 +63,7 @@
             }
         }
 
-        function getSupplier()
+        function getSuppliers()
         {
             $supp=$this->izvrsi_select("SELECT supplier.id,supplier.name FROM supplier");
 
@@ -73,6 +73,108 @@
                 die("Neuspesan upit: ".$supp['poruka']);
             }
         }
+        
+        function updateSupplier($newname,$id)
+        {
+            $suppNew=$this->izvrsi_select("UPDATE `supplier` SET `name`=$newname WHERE `id`=$id;");
+
+            if($suppNew['uspesno'] == true){
+                return json_encode($suppNew['niz']);
+            }else{
+                die("Neuspesan upit: ".$suppNew['poruka']);
+            }
+        }
+
+        function deleteSupplier($id,$name)
+        {
+            $suppDel=$this->izvrsi_select("DELETE FROM `supplier` WHERE `id`= $id OR `name`=$name");
+
+            if($suppDel['uspesno'] == true){
+                return ('obrisano');
+            }else{
+                die("Neuspesan upit: ".$suppDel['poruka']);
+            }
+        }
+
+        function getProducts()
+        {
+            $pro = $this->izvrsi_select("SELECT product.id, 
+                                                    product.part_desc, 
+                                                    product.part_number, 
+                                                    product.days_valid, 
+                                                    product.price, 
+                                                    product.priority, 
+                                                    category.category, 
+                                                    state.state, 
+                                                    supplier.name 
+                                            FROM  product 
+                                            JOIN category ON product.category_id = category.id 
+                                            JOIN state ON product.state_id = state.id 
+                                            JOIN supplier ON product.supplier_id = supplier.id ");
+            if($pro['uspesno'] == true){
+                echo json_encode($pro['niz']);
+            }else{
+                die("Neuspesan upit: ".$pro['poruka']);
+            }
+        }
+
+
+        function getProducts($dobavljac)
+        {
+            $pro = $this->izvrsi_select("SELECT product.id, 
+                                                    product.part_desc, 
+                                                    product.part_number, 
+                                                    product.days_valid, 
+                                                    product.price, 
+                                                    product.priority, 
+                                                    category.category, 
+                                                    state.state, 
+                                                    supplier.name 
+                                            FROM  product 
+                                            JOIN category ON product.category_id = category.id 
+                                            JOIN state ON product.state_id = state.id 
+                                            JOIN supplier ON product.supplier_id = supplier.id
+                                            
+                                            WHERE supplier.name=$dobavljac ");
+            if($pro['uspesno'] == true){
+                echo json_encode($pro['niz']);
+            }else{
+                die("Neuspesan upit: ".$pro['poruka']);
+            }
+        }
+
+        function deleteProduct($id)
+        {
+            $proDel=$this->izvrsi_select("DELETE FROM `product` WHERE `id`= $id ");
+
+            if($proDel['uspesno'] == true){
+                return ('obrisano');
+            }else{
+                die("Neuspesan upit: ".$proDel['poruka']);
+            }
+        }
+
+        function updateProducts($id)
+        {
+            $pro = $this->izvrsi_select("UPDATE `product` SET `id`=$id,
+                                                `part_desc`='[value-2]',
+                                                `part_number`='[value-3]',
+                                                `days_valid`='[value-4]',
+                                                `quantity`='[value-5]',
+                                                `price`='[value-6]',
+                                                `category_id`='[value-7]',
+                                                `priority`='[value-8]',
+                                                `state_id`='[value-9]',
+                                                `supplier_id`='[value-10]' 
+                                                
+                                                WHERE `id`=$id ");
+            if($pro['uspesno'] == true){
+                echo json_encode($pro['niz']);
+            }else{
+                die("Neuspesan upit: ".$pro['poruka']);
+            }
+        }
+
 
 
     }
@@ -80,7 +182,7 @@
     
     $res = $baza->getAllData();
 
-    $dobavljaci= $baza->getSupplier();
+    $dobavljaci= $baza->getSuppliers();
 
 // echo '<pre style="background:white;">';
 // print_r ($res);
