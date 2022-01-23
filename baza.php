@@ -42,7 +42,7 @@
         }
 
 
-        function getAllData(){
+        function getAllData(){//radi
             $r = $this->izvrsi_select("SELECT product.id, 
                                                     product.part_desc, 
                                                     product.part_number, 
@@ -63,7 +63,7 @@
             }
         }
 
-        function getSuppliers()
+        function getSuppliers()//radi
         {
             $supp=$this->izvrsi_select("SELECT supplier.id,supplier.name FROM supplier");
 
@@ -73,30 +73,30 @@
                 die("Neuspesan upit: ".$supp['poruka']);
             }
         }
+
         
-        function updateSupplier($newname,$id)
-        {
-            $suppNew=$this->izvrsi_select("UPDATE `supplier` SET `name`=$newname WHERE `id`=$id;");
 
-            if($suppNew['uspesno'] == true){
-                return json_encode($suppNew['niz']);
+        function deleteSupplier($id)//radi
+        {
+             return $p=$this->izvrsi_upit("DELETE FROM supplier WHERE id= $id ");
+
+           
+            if ($p == true){
+                return ("obrisano");
             }else{
-                die("Neuspesan upit: ".$suppNew['poruka']);
+                die("nije obrisano".$p[1]);
             }
+           
+
         }
 
-        function deleteSupplier($id,$name)
+        function deleteProduct($id)//radi
         {
-            $suppDel=$this->izvrsi_select("DELETE FROM `supplier` WHERE `id`= $id OR `name`=$name");
+            return $this->izvrsi_upit("DELETE FROM product WHERE id= $id ");
 
-            if($suppDel['uspesno'] == true){
-                return ('obrisano');
-            }else{
-                die("Neuspesan upit: ".$suppDel['poruka']);
-            }
         }
 
-        function getProducts()
+        function getProducts()//radi
         {
             $pro = $this->izvrsi_select("SELECT product.id, 
                                                     product.part_desc, 
@@ -119,9 +119,9 @@
         }
 
 
-        function getProducts($dobavljac)
+        function getProducts1($dobavljac)//radi
         {
-            $pro = $this->izvrsi_select("SELECT product.id, 
+            $pro1 = $this->izvrsi_select("SELECT product.id, 
                                                     product.part_desc, 
                                                     product.part_number, 
                                                     product.days_valid, 
@@ -135,39 +135,28 @@
                                             JOIN state ON product.state_id = state.id 
                                             JOIN supplier ON product.supplier_id = supplier.id
                                             
-                                            WHERE supplier.name=$dobavljac ");
-            if($pro['uspesno'] == true){
-                echo json_encode($pro['niz']);
+                                            WHERE supplier.name LIKE '%$dobavljac%' ");
+
+            if($pro1['uspesno'] == true){
+                echo json_encode($pro1['niz']);
             }else{
-                die("Neuspesan upit: ".$pro['poruka']);
+                die("Neuspesan upit: ".$pro1['poruka']);
             }
         }
 
-        function deleteProduct($id)
-        {
-            $proDel=$this->izvrsi_select("DELETE FROM `product` WHERE `id`= $id ");
 
-            if($proDel['uspesno'] == true){
-                return ('obrisano');
-            }else{
-                die("Neuspesan upit: ".$proDel['poruka']);
-            }
-        }
-
-        function updateProducts($id,$part_desc,$part_number,$days_valid,$quantity,$price, $category_id, $priority, $state_id, $supplier_id)
+        function updateProducts($id,$part_desc,$part_number,$days_valid,$quantity,$price, $priority)//radi
         {
-            $newPro = $this->izvrsi_select("UPDATE `product` SET `id`=$id,
-                                                `part_desc`= $part_desc,
-                                                `part_number`=$part_number,
-                                                `days_valid`=$days_valid,
-                                                `quantity`=$quantity,
-                                                `price`=$price,
-                                                `category_id`=$category_id,
-                                                `priority`=$priority,
-                                                `state_id`=$state_id,
-                                                `supplier_id`=$supplier_id 
+           return $newPro = $this->izvrsi_upit("UPDATE product SET id=$id,
+                                                part_desc= '$part_desc',
+                                                part_number='$part_number',
+                                                days_valid=$days_valid,
+                                                quantity=$quantity,
+                                                price=$price,
+                                                priority=$priority
                                                 
-                                                WHERE `id`=$id ");
+                                                
+                                                WHERE id=$id ");
             if($newPro['uspesno'] == true){
                 echo json_encode($newPro['niz']);
             }else{
@@ -175,27 +164,57 @@
             }
         }
 
+        function updateSupplier($newname,$id)//radi
+        {
+            return $suppNew=$this->izvrsi_upit("UPDATE supplier SET name='$newname' WHERE id=$id ");
+
+        }
+
+        function updateSupplier2($newname, $name)//radi
+        {
+            return $suppNew2=$this->izvrsi_upit("UPDATE supplier SET name='$newname' WHERE name='$name' ");
+
+        }
+
+
 
 
     }
     $baza = new Baza('goca');
     
-    $res = $baza->getAllData();
+   // $res = $baza->getAllData();
+    //$dobavljaci= $baza->getSuppliers();
+    //$proizvodi = $baza->getProducts();
 
-    $dobavljaci= $baza->getSuppliers();
+   //$prodob = $baza->getProducts1("bbbb");
+
+   //$updateS= $baza->updateSupplier("bbbb",1011);
+  // $updateS=$baza->updateSupplier2("Luigi", "bbbb");
+    
+   // $put1 = $baza->deleteProduct(140);
+    //$deleteS=$baza->deleteSupplier(1011);
+
+$y=$baza->updateProducts(141,'Dell','neki nesto',17,56,100,2);
+
 
 // echo '<pre style="background:white;">';
 // print_r ($res);
 // echo '</pre>';
 // die;
 
-
 echo '<pre style="background:white;">';
-print_r ($dobavljaci);
+print_r ($y);
 echo '</pre>';
 die;
+
+
+// echo '<pre style="background:white;">';
+// print_r ($dobavljaci);
+// echo '</pre>';
+// die;
 
 // echo '<pre style="background:white;">';
 // print_r ($proizvodi);
 // echo '</pre>';
 // die;
+
