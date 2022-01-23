@@ -6,8 +6,6 @@ set_time_limit(100);
             
             $csvFile = fopen("suppliers.csv", 'r');
 
-
-            
             // Skip the first line
             fgetcsv($csvFile);
             
@@ -68,3 +66,5 @@ set_time_limit(100);
             echo "<p>======================</p>";
             echo "Zavrseno";
     
+ 
+            

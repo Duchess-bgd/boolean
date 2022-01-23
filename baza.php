@@ -135,7 +135,7 @@
                                             JOIN state ON product.state_id = state.id 
                                             JOIN supplier ON product.supplier_id = supplier.id
                                             
-                                            WHERE supplier.name LIKE '%$dobavljac%' ");
+                                            WHERE supplier.name= '$dobavljac' ");
 
             if($pro1['uspesno'] == true){
                 echo json_encode($pro1['niz']);
@@ -177,44 +177,7 @@
         }
 
 
-
-
     }
+
+    
     $baza = new Baza('goca');
-    
-   // $res = $baza->getAllData();
-    //$dobavljaci= $baza->getSuppliers();
-    //$proizvodi = $baza->getProducts();
-
-   //$prodob = $baza->getProducts1("bbbb");
-
-   //$updateS= $baza->updateSupplier("bbbb",1011);
-  // $updateS=$baza->updateSupplier2("Luigi", "bbbb");
-    
-   // $put1 = $baza->deleteProduct(140);
-    //$deleteS=$baza->deleteSupplier(1011);
-
-$y=$baza->updateProducts(141,'Dell','neki nesto',17,56,100,2);
-
-
-// echo '<pre style="background:white;">';
-// print_r ($res);
-// echo '</pre>';
-// die;
-
-echo '<pre style="background:white;">';
-print_r ($y);
-echo '</pre>';
-die;
-
-
-// echo '<pre style="background:white;">';
-// print_r ($dobavljaci);
-// echo '</pre>';
-// die;
-
-// echo '<pre style="background:white;">';
-// print_r ($proizvodi);
-// echo '</pre>';
-// die;
-
