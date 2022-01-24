@@ -135,7 +135,7 @@
                                             JOIN state ON product.state_id = state.id 
                                             JOIN supplier ON product.supplier_id = supplier.id
                                             
-                                            WHERE supplier.name= '$dobavljac' ");
+                                            WHERE supplier.name LIKE '%$dobavljac%' ");
 
             if($pro1['uspesno'] == true){
                 echo json_encode($pro1['niz']);
